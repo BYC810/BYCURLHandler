@@ -1,0 +1,16 @@
+PODS:
+  - BYCURLHandler (0.1.0)
+
+DEPENDENCIES:
+  - BYCURLHandler (from `../`)
+
+EXTERNAL SOURCES:
+  BYCURLHandler:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  BYCURLHandler: e40d410bc17255c9dff4b65a7838eaa4c728917b
+
+PODFILE CHECKSUM: 9eaf7ae604e59078ffa8927e6546c2e9cc2b71f0
+
+COCOAPODS: 1.9.1

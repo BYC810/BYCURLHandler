@@ -1,0 +1,6 @@
+framework module BYCURLHandler {
+  umbrella header "BYCURLHandler-umbrella.h"
+
+  export *
+  module * { export * }
+}
