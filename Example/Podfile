@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'BYCURLHandler_Example' do
+  pod 'BYCURLHandler', :path => '../'
+
+  target 'BYCURLHandler_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
