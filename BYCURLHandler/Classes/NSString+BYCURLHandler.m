@@ -9,6 +9,7 @@
 
 @implementation NSString (BYCURLHandler)
 - (NSString *)addParameters:(NSDictionary *)parameters {
+    NSString *mySelf = [self stringByRemovingPercentEncoding];
     NSMutableArray *parts = [NSMutableArray array];
 
     for (NSString *key in [parameters allKeys]) {
@@ -25,14 +26,15 @@
         addSuffixString = [NSString stringWithFormat:@"%@%@", @"?", parametersString]; // 原链接不存在参数, 则先添加"?", 再拼接参数;
     }
 
-    return [self stringByAppendingString:addSuffixString];
+    return [mySelf stringByAppendingString:addSuffixString];
 }
 
 - (NSString *)deleteParameterOfKey:(NSString *)key; {
+    NSString *mySelf = [self stringByRemovingPercentEncoding];
     NSString *finalString = [NSString string];
 
-    if ([self containsString:key]) {
-        NSMutableString *mutStr = [NSMutableString stringWithString:self];
+    if ([mySelf containsString:key]) {
+        NSMutableString *mutStr = [NSMutableString stringWithString:mySelf];
         NSArray *strArray = [mutStr componentsSeparatedByString:key];
 
         NSMutableString *firstStr = [strArray objectAtIndex:0];
@@ -51,7 +53,7 @@
             finalString = [firstStr substringToIndex:[firstStr length] - 1];
         }
     } else {
-        finalString = self;
+        finalString = mySelf;
     }
 
     return finalString;
@@ -59,12 +61,12 @@
 
 - (NSString *)modifyParameterOfKey:(NSString *)key toValue:(NSString *)toValue {
     NSDictionary *parameters = [self parseURLParameters];
-
+    NSString *mySelf = [self stringByRemovingPercentEncoding];
     if (parameters.count > 0 && [parameters.allKeys containsObject:key]) {
         [parameters setValue:toValue forKey:key];
     }
 
-    NSString *urlString = self;
+    NSString *urlString = mySelf;
     for (NSString *key in parameters.allKeys) {
         urlString =    [urlString deleteParameterOfKey:key];
     }
@@ -73,12 +75,13 @@
 }
 
 - (NSMutableDictionary *)parseURLParameters {
-    NSRange range = [self rangeOfString:@"?"];
+    NSString *mySelf = [self stringByRemovingPercentEncoding];
+    NSRange range = [mySelf rangeOfString:@"?"];
     if (range.location == NSNotFound) return nil;
 
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 
-    NSString *parametersString = [self substringFromIndex:range.location + 1];
+    NSString *parametersString = [mySelf substringFromIndex:range.location + 1];
     if ([parametersString containsString:@"&"]) {
         NSArray *urlComponents = [parametersString componentsSeparatedByString:@"&"];
 
